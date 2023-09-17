@@ -1,0 +1,14 @@
+file (GLOB CXX_FILES FILES *.cxx)
+
+set (EXE_NAME "test_meminspect")
+
+add_executable (${EXE_NAME} ${CXX_FILES})
+
+target_include_directories(${EXE_NAME} PRIVATE ${GTEST_INCLUDE_DIRECTORIES})
+
+target_link_libraries(${EXE_NAME}
+  meminspect
+  GTest::GTest
+)
+
+add_test (NAME ${EXE_NAME} COMMAND $<TARGET_FILE:${EXE_NAME}>)
