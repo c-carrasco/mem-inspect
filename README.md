@@ -1,6 +1,8 @@
 Memory Inspector
 ================
 
+[![ci](https://github.com/c-carrasco/mem-inspect/actions/workflows/main.yml/badge.svg)](https://github.com/c-carrasco/mem-inspect/actions/workflows/main.yml)
+
 C++ library for memory tracking and leak detection.
 
 # Overview
@@ -13,7 +15,7 @@ MemInspect is a versatile C++ library designed for memory tracking and leak dete
 - [ ] Implementation
 - [ ] Unit testing
 - [ ] Documentation
-- [ ] Github actions
+- [X] Github actions
 
 # Contributing
 We welcome contributions from the community.

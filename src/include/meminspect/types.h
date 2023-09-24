@@ -5,6 +5,7 @@
 // ----------------------------------------------------------------------------
 #ifndef __MEM_INSPECT_TYPES_H__
 #define __MEM_INSPECT_TYPES_H__
+#include <array>
 #include <mutex>
 #include <optional>
 #include <stdexcept>
