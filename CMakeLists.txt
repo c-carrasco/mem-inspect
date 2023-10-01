@@ -10,7 +10,7 @@ project (
 include (cmake/configure_compiler.cmake)
 include (cmake/configure_version.cmake)
 include (cmake/conan.cmake)
-include (cmake/doxygen.cmake)
+# include (cmake/doxygen.cmake)
 
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
