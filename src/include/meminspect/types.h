@@ -20,6 +20,10 @@ namespace meminspect {
 using malloc_t = std::add_pointer<void * (size_t)>::type;
 /// @brief Type alias for the `realloc` function pointer.
 using realloc_t = std::add_pointer<void * (void *, size_t)>::type;
+/// @brief Type alias for the `calloc` function pointer.
+using calloc_t = std::add_pointer<void * (size_t, size_t)>::type;
+/// @brief Type alias for the `realloc` function pointer.
+using aligned_alloc_t = std::add_pointer<void * (size_t, size_t)>::type;
 /// @brief Type alias for the `free` function pointer.
 using free_t = std::add_pointer<void (void *)>::type;
 
@@ -35,7 +39,7 @@ class Mutex {
 
     /// @brief Unlocks the mutex.
     inline void unlock() {
-      std::atomic_flag_clear_explicit (&_lock, std::memory_order_acquire);
+      std::atomic_flag_clear_explicit (&_lock, std::memory_order_release);
     }
 
   private:
@@ -54,6 +58,16 @@ class ListPtr {
       T *value;   ///< Pointer to the stored value
       Node *next; ///< Pointer to the next node in the list.
     };
+
+    /// @brief Constructor
+    inline ListPtr () {
+      // empty
+    }
+
+    /// @brief Constructor
+    inline ListPtr (T *value) {
+      add (value);
+    }
 
     /// @brief Destructor to free all allocated memory.
     ~ListPtr() {
@@ -87,7 +101,7 @@ class ListPtr {
     /// @brief Finds a node with the given value in the list.
     /// @param value Pointer to the value to search for.
     /// @return Pointer to the node containing the value, or nullptr if not found.
-    Node * find (T *value) {
+    Node * find (const T *value) const {
       for (auto *it = _head; it != nullptr; it = it->next) {
         if (it->value == value)
           return it;
@@ -98,7 +112,7 @@ class ListPtr {
 
     /// @brief Removes a node with the given value from the list.
     /// @param value Pointer to the value to be removed.
-    void remove (T *value) {
+    void remove (const T *value) {
       Node *it0 { nullptr };
       Node *it1 { _head };
 
@@ -210,8 +224,6 @@ class SortedList {
     /// @param key The key to search for.
     /// @return A pointer to the found node or nullptr if not found.
     Node * find (K key) {
-      std::lock_guard<Mutex> guard { _mutex };
-
       for (auto n = _head; n != nullptr; n = n->next) {
         if (n->key == key) return n;
       }
@@ -247,7 +259,6 @@ class SortedList {
 
   private:
     Node *_head { nullptr };
-    Mutex _mutex;
 };
 
 /// @brief Basic HashMap class.
