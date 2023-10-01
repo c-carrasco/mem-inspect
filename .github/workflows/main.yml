@@ -16,12 +16,12 @@ jobs:
       - name: Build Debug GCC 13 C++17
         run: ./build.sh docker=gcc13 debug clean uban=on asan=on test
       - name: Build Release GCC 13 C++17
-        run: ./build.sh docker=gcc13 release clean test
+        run: ./build.sh docker=gcc13 release clean test doc
 
       - name: Build Debug Clang 16 C++17
         run: ./build.sh docker=clang16 debug clean uban=on asan=on test
       - name: Build Release Clang 16 C++17
-        run: ./build.sh docker=clang16 release clean test
+        run: ./build.sh docker=clang16 release clean test doc
 
   build-macos:
     runs-on: macos-latest
