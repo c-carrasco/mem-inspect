@@ -6,6 +6,7 @@
 #ifndef __MEM_INSPECT_MEMORY_HOOK_H__
 #define __MEM_INSPECT_MEMORY_HOOK_H__
 #include <dlfcn.h>
+#include <cstdlib>
 #include <stdexcept>
 #include <new>
 
@@ -38,7 +39,8 @@ extern void * malloc (size_t size) {
   if (!meminspect::DefaultAllocator::malloc) {
     meminspect::DefaultAllocator::malloc = reinterpret_cast<meminspect::malloc_t> (dlsym (RTLD_NEXT, "malloc"));
     if (dlerror() != nullptr)
-      throw std::runtime_error { "symbol not found" };
+      std::abort();
+
   }
 
   return meminspect::MemoryInspector<meminspect::DefaultAllocator>::alloc (size);
@@ -51,13 +53,13 @@ extern void * realloc (void *ptr, size_t size) {
   if (!meminspect::DefaultAllocator::realloc) {
      meminspect::DefaultAllocator::realloc = reinterpret_cast<meminspect::realloc_t> (dlsym (RTLD_NEXT, "realloc"));
     if (dlerror() != nullptr)
-      throw std::runtime_error { "symbol not found" };
+      std::abort();
   }
 
   if (!meminspect::DefaultAllocator::free) {
      meminspect::DefaultAllocator::free = reinterpret_cast<meminspect::free_t> (dlsym (RTLD_NEXT, "free"));
     if (dlerror() != nullptr)
-      throw std::runtime_error { "symbol not found" };
+      std::abort();
   }
 
   return meminspect::MemoryInspector<meminspect::DefaultAllocator>::realloc (ptr, size);
@@ -70,7 +72,7 @@ extern void * calloc (size_t num, size_t size) {
   if (!meminspect::DefaultAllocator::calloc) {
     meminspect::DefaultAllocator::calloc = reinterpret_cast<meminspect::calloc_t> (dlsym (RTLD_NEXT, "calloc"));
     if (dlerror() != nullptr)
-      throw std::runtime_error { "symbol not found" };
+      std::abort();
   }
 
   return meminspect::MemoryInspector<meminspect::DefaultAllocator>::calloc (num, size);
@@ -83,7 +85,7 @@ extern void * aligned_alloc (size_t alignment, size_t size) {
   if (!meminspect::DefaultAllocator::aligned_alloc) {
     meminspect::DefaultAllocator::aligned_alloc = reinterpret_cast<meminspect::aligned_alloc_t> (dlsym (RTLD_NEXT, "aligned_alloc"));
     if (dlerror() != nullptr)
-      throw std::runtime_error { "symbol not found" };
+      std::abort();
   }
 
   return meminspect::MemoryInspector<meminspect::DefaultAllocator>::aligned_alloc (alignment, size);
@@ -96,7 +98,7 @@ extern void free (void *ptr) {
   if (!meminspect::DefaultAllocator::free) {
      meminspect::DefaultAllocator::free = reinterpret_cast<meminspect::free_t> (dlsym (RTLD_NEXT, "free"));
     if (dlerror() != nullptr)
-      throw std::runtime_error { "symbol not found" };
+      std::abort();
   }
 
   meminspect::MemoryInspector<meminspect::DefaultAllocator>::dealloc (ptr);
