@@ -6,7 +6,12 @@ This library provides a hassle-free experience and is designed to be a simple an
 
 # Quick Start Guide
 
-### 1. Include the `memory_tracker.h` header.
+This guide will help you get started with using the MemoryTracker class to monitor and analyze memory allocation in your programs.
+
+### 1. Including the Necessary Headers
+
+In your C++ source code, include the necessary header file to access the MemoryTracker class:
+
 
 ```CPP
 #include <meminspect/memory_tracker.h>
@@ -14,7 +19,56 @@ This library provides a hassle-free experience and is designed to be a simple an
 
 **Note:** All functions, classes, structures, enums, ...  reside within the `meminspect` namespace.
 
-<TBC>
+### 2. Creating a MemoryTracker Object
+
+To start tracking memory usage, create an instance of the MemoryTracker class. This will automatically register memory usage with the MemoryInspector:
+
+```CPP
+  meminspect::MemoryTracker memoryTracker;
+```
+
+### 3. Monitoring Memory Allocation
+
+Now that you have a MemoryTracker object, any memory allocated using the default allocator (e.g., new, malloc, etc.) will be automatically tracked.
+
+### 4. Retrieving Allocated Memory Size
+
+To retrieve the total number of allocated bytes, you can use the getAllocatedBytes method:
+
+```CPP
+  const size_t allocatedBytes { memoryTracker.getAllocatedBytes() };
+```
+
+This will provide you with the total number of bytes currently allocated on the heap since the `memoryTracker` object was created.
+
+### 5. Cleaning Up
+
+When you're done with memory tracking, the MemoryTracker destructor will automatically unregister memory usage, so there's no need for explicit cleanup.
+
+# Example
+
+Here's a simple example of how to use the MemoryTracker class:
+
+```CPP
+#include <iostream>
+
+#include <meminspect/memory_tracker.h>
+
+int main() {
+  meminspect::MemoryTracker memoryTracker;
+
+  // Allocate some memory
+  auto buffer { std::make_unique<int []> (1000) };
+
+  // Retrieve allocated bytes
+  size_t allocatedBytes { memoryTracker.getAllocatedBytes() };
+
+  // Print the allocated bytes
+  std::cout << "Allocated Bytes: " << allocatedBytes << " bytes" << std::endl;
+
+  return 0;
+}
+```
 
 # Installation
 

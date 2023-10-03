@@ -11,7 +11,7 @@
 
 namespace meminspect {
 
-/// @brief Class for measuring memory usage.
+/// @brief This class is a part of the meminspect C++ library, designed for measuring memory usage in your C++ applications.
 class MemoryTracker {
   public:
     /// @brief Constructor for MemoryTracker.
