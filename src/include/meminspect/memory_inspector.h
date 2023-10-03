@@ -21,6 +21,8 @@ class MemoryInspector {
     /// @param size The size of memory to allocate.
     /// @return A pointer to the allocated memory.
     static inline void * alloc (size_t size) {
+      std::lock_guard<Mutex> guard { _mutex };
+
       const auto addr { Allocator::malloc (size) };
       _allocatedBytes += size;
 
@@ -32,6 +34,8 @@ class MemoryInspector {
     /// @param size The new size of memory to allocate.
     /// @return A pointer to the reallocated memory.
     static inline void * realloc (void *ptr, size_t size) {
+      std::lock_guard<Mutex> guard { _mutex };
+
       const auto addr { Allocator::realloc (ptr, size) };
 
       _allocatedBytes += size;
@@ -59,6 +63,8 @@ class MemoryInspector {
     /// @param size The number of bytes to allocate.
     /// @return A pointer to the allocated memory.
     static inline void * aligned_alloc (size_t alignment, size_t size) {
+      std::lock_guard<Mutex> guard { _mutex };
+
       const auto addr { Allocator::aligned_alloc (alignment, size) };
       _allocatedBytes += size;
 
@@ -68,6 +74,8 @@ class MemoryInspector {
     /// @brief Deallocates memory and tracks the deallocation.
     /// @param ptr A pointer to the memory to deallocate.
     static inline void dealloc (void *ptr) {
+      std::lock_guard<Mutex> guard { _mutex };
+
       const auto size { _mem.remove (ptr) };
       if (size)
         _allocatedBytes -= *size;
@@ -78,18 +86,23 @@ class MemoryInspector {
     /// @brief Tracks the addition of memory size.
     /// @param size A pointer to the size of memory to add.
     static inline void add (size_t *size) {
+      std::lock_guard<Mutex> guard { _mutex };
+
       _allocatedBytes.add (size);
     }
 
     /// @brief Tracks the removal of memory size.
     /// @param size A pointer to the size of memory to remove.
     static inline void remove (size_t *size) {
+      std::lock_guard<Mutex> guard { _mutex };
+
       _allocatedBytes.remove (size);
     }
 
   private:
     static HashMapPtr<void, size_t, Allocator> _mem;   ///< A HashMap for tracking allocated memory.
     static ListPtr<size_t, Allocator> _allocatedBytes; ///< A List for counting allocated bytes.
+    static Mutex _mutex;                               ///< A mutex to make code thread-safe.
 };
 
 template<typename Allocator>
@@ -97,6 +110,9 @@ HashMapPtr<void, size_t, Allocator> MemoryInspector<Allocator>::_mem {};
 
 template<typename Allocator>
 ListPtr<size_t, Allocator> MemoryInspector<Allocator>::_allocatedBytes {};
+
+template<typename Allocator>
+Mutex MemoryInspector<Allocator>::_mutex {};
 
 }
 
