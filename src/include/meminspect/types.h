@@ -13,6 +13,10 @@
 #include <type_traits>
 #include <utility>
 
+#ifndef MEMISPECT_HASHMAP_SIZE
+  #define MEMISPECT_HASHMAP_SIZE 1024
+#endif
+
 
 namespace meminspect {
 
@@ -262,7 +266,7 @@ class SortedList {
 };
 
 /// @brief Basic HashMap class.
-template<typename K, typename V, typename Allocator, size_t S=1024>
+template<typename K, typename V, typename Allocator, size_t S=MEMISPECT_HASHMAP_SIZE>
 class HashMapPtr {
   public:
     /// @brief Inserts an element.

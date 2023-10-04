@@ -1,7 +1,7 @@
 MemInspect Library
 ==================
 
-**Welcome to the MemInspect Library**, a versatile C++, header-only librar designed for memory tracking and leak detection.
+**Welcome to the MemInspect Library**, a versatile C++, header-only library designed for memory tracking and leak detection.
 This library provides a hassle-free experience and is designed to be a simple and valuable complement to more powerful and complex solution like Valgrind, especially in scenarios where such tools are unavailable or impractical, such as embedded platforms.
 
 # Quick Start Guide
@@ -17,9 +17,18 @@ In your C++ source code, include the necessary header file to access the MemoryT
 #include <meminspect/memory_tracker.h>
 ```
 
-**Note:** All functions, classes, structures, enums, ...  reside within the `meminspect` namespace.
+### 2. Configuring global settings (optional).
 
-### 2. Creating a MemoryTracker Object
+You can increase the size of the internal structures to try to improve the performance:
+
+- Define MEMISPECT_HASHMAP_SIZE with your desired amount of bytes (1024 by default)
+
+```CPP
+#define MEMISPECT_HASHMAP_SIZE 20480
+#include <meminspect/memory_tracker.h>
+```
+
+### 3. Creating a MemoryTracker Object
 
 To start tracking memory usage, create an instance of the MemoryTracker class. This will automatically register memory usage with the MemoryInspector:
 
@@ -27,11 +36,11 @@ To start tracking memory usage, create an instance of the MemoryTracker class. T
   meminspect::MemoryTracker memoryTracker;
 ```
 
-### 3. Monitoring Memory Allocation
+### 4. Monitoring Memory Allocation
 
 Now that you have a MemoryTracker object, any memory allocated using the default allocator (e.g., new, malloc, etc.) will be automatically tracked.
 
-### 4. Retrieving Allocated Memory Size
+### 5. Retrieving Allocated Memory Size
 
 To retrieve the total number of allocated bytes, you can use the getAllocatedBytes method:
 
@@ -41,7 +50,7 @@ To retrieve the total number of allocated bytes, you can use the getAllocatedByt
 
 This will provide you with the total number of bytes currently allocated on the heap since the `memoryTracker` object was created.
 
-### 5. Cleaning Up
+### 6. Cleaning Up
 
 When you're done with memory tracking, the MemoryTracker destructor will automatically unregister memory usage, so there's no need for explicit cleanup.
 
@@ -72,6 +81,5 @@ int main() {
 
 # Installation
 
-To use the library, follow these steps:
+MemInspect is a header-only C++ library. Just copy the `src/include/meminspect` folder to system or project's include path.
 
-- 1. Copy the `src/include/meminspect` folder into your project.
