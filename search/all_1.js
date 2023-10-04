@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['2_20creating_20a_20memorytracker_20object_0',['2. Creating a MemoryTracker Object',['../index.html#autotoc_md2',1,'']]]
+  ['2_20configuring_20global_20settings_20optional_0',['2. Configuring global settings (optional).',['../index.html#autotoc_md2',1,'']]]
 ];

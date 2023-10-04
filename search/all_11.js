@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['size_0',['4. Retrieving Allocated Memory Size',['../index.html#autotoc_md4',1,'']]],
-  ['start_20guide_1',['Quick Start Guide',['../index.html#autotoc_md0',1,'']]]
+  ['retrieving_20allocated_20memory_20size_0',['5. Retrieving Allocated Memory Size',['../index.html#autotoc_md5',1,'']]]
 ];

@@ -33,7 +33,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">MemInspect<span id="projectnumber">&#160;0.9.7e4a01a</span>
+   <div id="projectname">MemInspect<span id="projectnumber">&#160;0.9.238c26d</span>
    </div>
   </td>
  </tr>
@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__2workspace_2source_2doc_2readme"></a></p>
-<p><b>Welcome to the MemInspect Library</b>, a versatile C++, header-only librar designed for memory tracking and leak detection. This library provides a hassle-free experience and is designed to be a simple and valuable complement to more powerful and complex solution like Valgrind, especially in scenarios where such tools are unavailable or impractical, such as embedded platforms.</p>
+<p><b>Welcome to the MemInspect Library</b>, a versatile C++, header-only library designed for memory tracking and leak detection. This library provides a hassle-free experience and is designed to be a simple and valuable complement to more powerful and complex solution like Valgrind, especially in scenarios where such tools are unavailable or impractical, such as embedded platforms.</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Quick Start Guide</h1>
 <p>This guide will help you get started with using the MemoryTracker class to monitor and analyze memory allocation in your programs.</p>
@@ -108,25 +108,32 @@ Quick Start Guide</h1>
 1. Including the Necessary Headers</h3>
 <p>In your C++ source code, include the necessary header file to access the MemoryTracker class:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;meminspect/memory_tracker.h&gt;</span></div>
-</div><!-- fragment --><p><b>Note:</b> All functions, classes, structures, enums, ... reside within the <code>meminspect</code> namespace.</p>
-<h3><a class="anchor" id="autotoc_md2"></a>
-2. Creating a MemoryTracker Object</h3>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2"></a>
+2. Configuring global settings (optional).</h3>
+<p>You can increase the size of the internal structures to try to improve the performance:</p>
+<ul>
+<li>Define MEMISPECT_HASHMAP_SIZE with your desired amount of bytes (1024 by default)</li>
+</ul>
+<div class="fragment"><div class="line"><span class="preprocessor">#define MEMISPECT_HASHMAP_SIZE 20480</span></div>
+<div class="line"><span class="preprocessor">#include &lt;meminspect/memory_tracker.h&gt;</span></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
+3. Creating a MemoryTracker Object</h3>
 <p>To start tracking memory usage, create an instance of the MemoryTracker class. This will automatically register memory usage with the MemoryInspector:</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classmeminspect_1_1MemoryTracker.html">meminspect::MemoryTracker</a> memoryTracker;</div>
 <div class="ttc" id="aclassmeminspect_1_1MemoryTracker_html"><div class="ttname"><a href="classmeminspect_1_1MemoryTracker.html">meminspect::MemoryTracker</a></div><div class="ttdoc">This class is a part of the meminspect C++ library, designed for measuring memory usage in your C++ a...</div><div class="ttdef"><b>Definition</b> memory_tracker.h:15</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
-3. Monitoring Memory Allocation</h3>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
+4. Monitoring Memory Allocation</h3>
 <p>Now that you have a MemoryTracker object, any memory allocated using the default allocator (e.g., new, malloc, etc.) will be automatically tracked.</p>
-<h3><a class="anchor" id="autotoc_md4"></a>
-4. Retrieving Allocated Memory Size</h3>
+<h3><a class="anchor" id="autotoc_md5"></a>
+5. Retrieving Allocated Memory Size</h3>
 <p>To retrieve the total number of allocated bytes, you can use the getAllocatedBytes method:</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">size_t</span> allocatedBytes { memoryTracker.<a class="code hl_function" href="classmeminspect_1_1MemoryTracker.html#abbafd6ee9f395a0096a76da6bd881231">getAllocatedBytes</a>() };</div>
 <div class="ttc" id="aclassmeminspect_1_1MemoryTracker_html_abbafd6ee9f395a0096a76da6bd881231"><div class="ttname"><a href="classmeminspect_1_1MemoryTracker.html#abbafd6ee9f395a0096a76da6bd881231">meminspect::MemoryTracker::getAllocatedBytes</a></div><div class="ttdeci">size_t getAllocatedBytes()</div><div class="ttdoc">Get the number of allocated bytes (heap).</div><div class="ttdef"><b>Definition</b> memory_tracker.h:31</div></div>
 </div><!-- fragment --><p>This will provide you with the total number of bytes currently allocated on the heap since the <code>memoryTracker</code> object was created.</p>
-<h3><a class="anchor" id="autotoc_md5"></a>
-5. Cleaning Up</h3>
+<h3><a class="anchor" id="autotoc_md6"></a>
+6. Cleaning Up</h3>
 <p>When you're done with memory tracking, the MemoryTracker destructor will automatically unregister memory usage, so there's no need for explicit cleanup.</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Example</h1>
 <p>Here's a simple example of how to use the MemoryTracker class:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -147,12 +154,9 @@ Example</h1>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md8"></a>
 Installation</h1>
-<p>To use the library, follow these steps:</p>
-<ul>
-<li>1. Copy the <code>src/include/meminspect</code> folder into your project. </li>
-</ul>
+<p>MemInspect is a header-only C++ library. Just copy the <code>src/include/meminspect</code> folder to system or project's include path. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

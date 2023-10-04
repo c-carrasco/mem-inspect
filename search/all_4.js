@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['5_20cleaning_20up_0',['5. Cleaning Up',['../index.html#autotoc_md5',1,'']]]
+  ['5_20retrieving_20allocated_20memory_20size_0',['5. Retrieving Allocated Memory Size',['../index.html#autotoc_md5',1,'']]]
 ];
